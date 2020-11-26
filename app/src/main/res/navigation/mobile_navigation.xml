@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/navigation_home">
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.android.example.smartenvironmentalgreenhouse.ui.home.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/navigation_light"
+        android:name="com.android.example.smartenvironmentalgreenhouse.ui.light.LightFragment"
+        android:label="Light"
+        tools:layout="@layout/fragment_light" />
+    <fragment
+        android:id="@+id/navigation_water"
+        android:name="com.android.example.smartenvironmentalgreenhouse.ui.water.WaterFragment"
+        android:label="Water"
+        tools:layout="@layout/fragment_water" />
+    <fragment
+        android:id="@+id/navigation_temperature"
+        android:name="com.android.example.smartenvironmentalgreenhouse.ui.temperature.TemperatureFragment"
+        android:label="Temperature"
+        tools:layout="@layout/fragment_temperature" />
+</navigation>
