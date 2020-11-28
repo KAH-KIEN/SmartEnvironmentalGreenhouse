@@ -7,6 +7,9 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.firebase.FirebaseOptions
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.ktx.initialize
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,5 +25,14 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_home, R.id.navigation_light, R.id.navigation_water, R.id.navigation_temperature))
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        val options = FirebaseOptions.Builder()
+                .setProjectId("bait2023-iot")
+                .setApiKey("AIzaSyCJYdbDRNX6uvSl945e6kuWUqLFi217e94")
+                .setApplicationId("1:570947060769:android:2d97f11855f393050d8f60")
+                .setDatabaseUrl("https://bait2023-iot.firebaseio.com/")
+                .build()
+
+        Firebase.initialize(this , options, "secondary")
     }
 }
