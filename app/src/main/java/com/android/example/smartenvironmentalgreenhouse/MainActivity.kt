@@ -34,5 +34,14 @@ class MainActivity : AppCompatActivity() {
                 .build()
 
         Firebase.initialize(this , options, "secondary")
+
+        val options2 = FirebaseOptions.Builder()
+                .setProjectId("bait2123-202010-05")
+                .setApiKey("AIzaSyC8dkLaUI2DRBZDXBbBVx0duJnIrqm-iMs")
+                .setApplicationId("1:885894113414:android:7058a88ede95accbe2c907")
+                .setDatabaseUrl("https://bait2123-202010-05.firebaseio.com/")
+                .build()
+
+        Firebase.initialize(this , options2, "third")
     }
 }
