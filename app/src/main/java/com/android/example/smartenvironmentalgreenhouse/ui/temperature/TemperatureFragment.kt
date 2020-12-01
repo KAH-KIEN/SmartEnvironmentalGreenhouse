@@ -40,12 +40,52 @@ class TemperatureFragment : Fragment() {
         val myRef = database.reference
         val tempValue: TextView = root.findViewById(R.id.tempValue)
         val hmdValue: TextView = root.findViewById(R.id.hmdValue)
+        val fanStatus: TextView = root.findViewById(R.id.fanStatus)
+        val lightStatus: TextView = root.findViewById(R.id.lightStatus)
+        val waterSprayStatus: TextView = root.findViewById(R.id.waterSprayStatus)
+        val windowStatus: TextView = root.findViewById(R.id.windowStatus)
+
         val onButton: Button = root.findViewById(R.id.openWindow)
         val offButton: Button = root.findViewById(R.id.closeWindow)
 
         val secondary = Firebase.app("secondary")
         val secondaryDatabase = Firebase.database(secondary)
         val myRef2 = secondaryDatabase.reference
+
+        myRef.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val fan = snapshot.child("PI_04_CONTROL").child("relay1").value.toString()
+                val light = snapshot.child("PI_04_CONTROL").child("relay2").value.toString()
+                val water = snapshot.child("PI_04_CONTROL").child("lcdscr").value.toString()
+                val window = snapshot.child("PI_04_CONTROL").child("oledsc").value.toString()
+
+                //Show status
+                if (fan == "1")
+                    fanStatus.text = "Fan Status: On"
+                else
+                    fanStatus.text = "Fan Status: Off"
+
+                if (light == "1")
+                    lightStatus.text = "Light Status: On"
+                else
+                    lightStatus.text = "Light Status: Off"
+
+                if (water == "1")
+                    waterSprayStatus.text = "Water Spray Status: On"
+                else
+                    waterSprayStatus.text = "Water Spray Status: Off"
+
+                if (window == "1")
+                    windowStatus.text = "Window Status: On"
+                else
+                    windowStatus.text = "Window Status: Off"
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.w(TAG, "Failed to read value.", error.toException())
+            }
+
+        })
 
         myRef2.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -74,12 +114,12 @@ class TemperatureFragment : Fragment() {
             }
         })
 
-        onButton?.setOnClickListener {
-            database.reference.child("PI_04_CONTROL").child("oledsc").setValue("1")
+        onButton.setOnClickListener {
+            myRef.child("PI_04_CONTROL").child("oledsc").setValue("1")
         }
 
-        offButton?.setOnClickListener {
-            database.reference.child("PI_04_CONTROL").child("oledsc").setValue("0")
+        offButton.setOnClickListener {
+            myRef.child("PI_04_CONTROL").child("oledsc").setValue("0")
         }
 
         return root

@@ -10,8 +10,8 @@
         android:id="@+id/tempValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:text="TextView"
+        android:layout_marginTop="8dp"
+        android:text="0°C"
         android:textAlignment="center"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/temperature"
@@ -24,8 +24,8 @@
         android:id="@+id/hmdValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="TextView"
+        android:layout_marginTop="8dp"
+        android:text="0%"
         android:textAlignment="center"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/tempValue"
@@ -37,7 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
         android:text="Temperature"
         android:textAlignment="center"
@@ -50,7 +50,7 @@
         android:id="@+id/humidity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="24dp"
         android:text="Humidity"
         android:textAlignment="center"
         android:textSize="24sp"
@@ -62,24 +62,66 @@
         android:id="@+id/openWindow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="8dp"
         android:text="OPEN WINDOW"
         android:textColor="@color/MossGreen"
-        app:layout_constraintBottom_toTopOf="@+id/closeWindow"
-        app:layout_constraintEnd_toEndOf="@+id/closeWindow"
-        app:layout_constraintStart_toStartOf="@+id/closeWindow" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lightStatus" />
 
     <Button
         android:id="@+id/closeWindow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginTop="24dp"
         android:text="CLOSE WINDOW"
         android:textColor="@color/MossGreen"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/openWindow"
+        app:layout_constraintStart_toStartOf="@+id/openWindow"
+        app:layout_constraintTop_toBottomOf="@+id/openWindow" />
+
+    <TextView
+        android:id="@+id/fanStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="24dp"
+        android:text="Fan Status: "
+        app:layout_constraintEnd_toStartOf="@+id/waterSprayStatus"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hmdValue" />
+
+    <TextView
+        android:id="@+id/lightStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Light Status: "
+        app:layout_constraintStart_toStartOf="@+id/fanStatus"
+        app:layout_constraintTop_toBottomOf="@+id/fanStatus" />
+
+    <TextView
+        android:id="@+id/waterSprayStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="8dp"
+        android:text="Water Spray Status: "
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/fanStatus"
+        app:layout_constraintTop_toBottomOf="@+id/hmdValue" />
+
+    <TextView
+        android:id="@+id/windowStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Window Status: "
+        app:layout_constraintStart_toStartOf="@+id/waterSprayStatus"
+        app:layout_constraintTop_toBottomOf="@+id/waterSprayStatus" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
