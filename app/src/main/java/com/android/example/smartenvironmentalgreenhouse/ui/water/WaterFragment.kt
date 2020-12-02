@@ -29,7 +29,7 @@ class WaterFragment : Fragment() {
     var minSoilLvl = 300
     var bestSoilValue = 600
     private lateinit var binding: FragmentWaterBinding
-    val third = Firebase.app("third")
+    val third = Firebase.app("secondary")
     val thirdDatabase = Firebase.database(third).reference
 
     override fun onCreateView(
