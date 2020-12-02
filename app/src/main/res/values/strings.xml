@@ -20,4 +20,6 @@
     <string name="LED">LED :</string>
     <string name="PowerSupply">Power Supply :</string>
     <string name="EnergyGenerated">Energy Generated :</string>
+    <string name="on">ON</string>
+    <string name="OFF">OFF</string>
 </resources>
