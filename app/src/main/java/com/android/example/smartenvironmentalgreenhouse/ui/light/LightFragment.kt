@@ -1,5 +1,12 @@
 package com.android.example.smartenvironmentalgreenhouse.ui.light
 
+
+
+import android.content.Context
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -7,6 +14,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+
+
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -18,9 +27,18 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import java.util.*
 
-class LightFragment : Fragment() {
+class LightFragment : Fragment(), SensorEventListener {
 
     private lateinit var lightViewModel: LightViewModel
+    private lateinit var sensorManager: SensorManager
+    private var light: Sensor? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        sensorManager = activity?.getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        light = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT)
+    }
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -36,7 +54,7 @@ class LightFragment : Fragment() {
         val database = Firebase.database
         val myRef = database.reference
 
-        val c = Calendar.getInstance()
+        /*val c = Calendar.getInstance()
         val month = c.get(Calendar.MONTH) + 1
         val day = c.get(Calendar.DAY_OF_MONTH)
         val hour :String = c.get(Calendar.HOUR_OF_DAY).toString()
@@ -52,7 +70,7 @@ class LightFragment : Fragment() {
         Log.i("childName","$childName")
         Log.i("hourName","$hourName")
 
-        //myRef.setValue("=App II running=")
+        myRef.setValue("=App II running=")
 
         myRef.child("PI_04_2020$month$day").child("$hour").addChildEventListener(object :
             ChildEventListener {
@@ -97,16 +115,16 @@ class LightFragment : Fragment() {
                 Log.w("child", "postComments:onCancelled", databaseError.toException())
             }
         })
-//        val textView: TextView = root.findViewById(R.id.text_light)
-//        lightViewModel.text.observe(viewLifecycleOwner, Observer {
-//            textView.text = it
-//        })
+        val textView: TextView = root.findViewById(R.id.text_light)
+        lightViewModel.text.observe(viewLifecycleOwner, Observer {
+            textView.text = it
+        })*/
         return root
     }
 
     private fun processLight(light: String): String{
         val database = Firebase.database
-        val value :String = if (light.toInt() <5)
+        val value :String = if (light.toFloat() <5)
         //Low light level, turn on led
             "1"
         else{
@@ -120,7 +138,7 @@ class LightFragment : Fragment() {
 
     private fun processEnergyConsumption(energyConsumption: Int,light :String) : String{
         val database = Firebase.database
-        val value :String = if (energyConsumption > light.toInt()* 8)
+        val value :String = if (energyConsumption > light.toFloat()* 8)
         //Low light level, turn on led
             "1"
         else{
@@ -140,4 +158,49 @@ class LightFragment : Fragment() {
         require(start <= end) { "Illegal Argument" }
         return (start..end).random()
     }
+
+    override fun onSensorChanged(event: SensorEvent?) {
+        val test : TextView = requireView().findViewById(R.id.textViewLightValue)
+        if (event != null) {
+            val energyUsage = rand(700,1000)
+            val test: TextView = requireView().findViewById(R.id.textViewLightValue)
+            val test2: TextView = requireView().findViewById(R.id.textViewEnergyValue)
+            val test3: TextView = requireView().findViewById(R.id.textViewEnergyGenerated)
+
+            val relay1: TextView = requireView().findViewById(R.id.textViewRelay1)
+            val relay2: TextView = requireView().findViewById(R.id.textViewRelay2)
+
+            test2.text = energyUsage.toString()
+            test3.text = (event.values[0]*6).toString()
+            relay1.text = (if ( processLight(event.values[0].toString()) == "1") {
+                "ON"
+            }
+            else
+            {
+                "OFF"
+            }).toString()
+
+            relay2.text = (if (processEnergyConsumption(energyUsage,event.values[0].toString()) == "1") {
+                "ON"
+            }
+            else
+            {
+                "OFF"
+            }).toString()
+            test.text = event.values[0].toString()
+        }
+    }
+
+    override fun onResume() {
+        // Register a listener for the sensor.
+        super.onResume()
+        sensorManager.registerListener(this, light, SensorManager.SENSOR_DELAY_NORMAL)
+    }
+
+
+    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+
+    }
+
+
 }
