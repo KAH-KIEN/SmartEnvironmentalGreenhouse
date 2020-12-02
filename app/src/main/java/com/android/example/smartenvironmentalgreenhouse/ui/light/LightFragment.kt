@@ -66,7 +66,28 @@ class LightFragment : Fragment(), SensorEventListener {
         val buttonOff1 = root.findViewById<Button>(R.id.buttonOff1)
 
         val buttonOn2 = root.findViewById<Button>(R.id.buttonOn2)
-        val buttonOff2 = root.findViewById<Button>(R.id.buttonOff1)
+        val buttonOff2 = root.findViewById<Button>(R.id.buttonOff2)
+
+        val relay1: TextView = root.findViewById(R.id.textViewRelay1)
+        val relay2: TextView = root.findViewById(R.id.textViewRelay2)
+        if (manualMode1)
+        {
+            textManual1.text = " : Manual Mode"
+        }
+        else
+        {
+            textManual1.text = " : Auto Mode"
+        }
+
+        if (manualMode2)
+        {
+            textManual2.text = " : Manual Mode"
+        }
+        else
+        {
+            textManual2.text = " : Auto Mode"
+        }
+
 
         buttonManualMode1.setOnClickListener() {
             manualMode1 = !manualMode1
@@ -97,6 +118,7 @@ class LightFragment : Fragment(), SensorEventListener {
             {
                 val database = Firebase.database
                 database.reference.child("PI_04_CONTROL").child("relay1").setValue("1")
+                relay1.text = "ON"
             }
             else
             {
@@ -109,6 +131,7 @@ class LightFragment : Fragment(), SensorEventListener {
             {
                 val database = Firebase.database
                 database.reference.child("PI_04_CONTROL").child("relay1").setValue("0")
+                relay1.text = "OFF"
             }
             else
             {
@@ -121,6 +144,7 @@ class LightFragment : Fragment(), SensorEventListener {
             {
                 val database = Firebase.database
                 database.reference.child("PI_04_CONTROL").child("relay2").setValue("1")
+                relay2.text = "ON"
             }
             else
             {
@@ -133,6 +157,7 @@ class LightFragment : Fragment(), SensorEventListener {
             {
                 val database = Firebase.database
                 database.reference.child("PI_04_CONTROL").child("relay2").setValue("0")
+                relay2.text = "OFF"
             }
             else
             {
@@ -228,7 +253,7 @@ class LightFragment : Fragment(), SensorEventListener {
 
     private fun processEnergyConsumption(energyConsumption: Int,light :String) : String{
         val database = Firebase.database
-        val value :String = if (energyConsumption > light.toFloat()* 8)
+        val value :String = if (energyConsumption > light.toFloat()* 60)
         //Low light level, turn on led
             "1"
         else{
@@ -265,7 +290,7 @@ class LightFragment : Fragment(), SensorEventListener {
 
 
             test2.text = energyUsage.toString()
-            test3.text = (event.values[0]*6).toString()
+            test3.text = (event.values[0]*60).toString()
             if (!manualMode1)
             {
 
