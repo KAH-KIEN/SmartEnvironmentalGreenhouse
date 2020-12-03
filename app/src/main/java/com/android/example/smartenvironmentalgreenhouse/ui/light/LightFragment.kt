@@ -276,47 +276,47 @@ class LightFragment : Fragment(), SensorEventListener {
     }
 
     override fun onSensorChanged(event: SensorEvent?) {
-        val test : TextView = requireView().findViewById(R.id.textViewLightValue)
-        if (event != null) {
-            val energyUsage = rand(700,1000)
+        if (view != null) {
             val test: TextView = requireView().findViewById(R.id.textViewLightValue)
-            val test2: TextView = requireView().findViewById(R.id.textViewEnergyValue)
-            val test3: TextView = requireView().findViewById(R.id.textViewEnergyGenerated)
+            if (event != null) {
+                val energyUsage = rand(700, 1000)
+                val test: TextView = requireView().findViewById(R.id.textViewLightValue)
+                val test2: TextView = requireView().findViewById(R.id.textViewEnergyValue)
+                val test3: TextView = requireView().findViewById(R.id.textViewEnergyGenerated)
 
 
-            val relay1: TextView = requireView().findViewById(R.id.textViewRelay1)
-            val relay2: TextView = requireView().findViewById(R.id.textViewRelay2)
+                val relay1: TextView = requireView().findViewById(R.id.textViewRelay1)
+                val relay2: TextView = requireView().findViewById(R.id.textViewRelay2)
 
 
 
 
-            test2.text = energyUsage.toString()
-            test3.text = (event.values[0]*60).toString()
-            if (!manualMode1)
-            {
+                test2.text = energyUsage.toString()
+                test3.text = (event.values[0] * 60).toString()
+                if (!manualMode1) {
 
-                relay1.text = (if ( processLight(event.values[0].toString()) == "1") {
-                    "ON"
+                    relay1.text = (if (processLight(event.values[0].toString()) == "1") {
+                        "ON"
+                    } else {
+                        "OFF"
+                    }).toString()
                 }
-                else
-                {
-                    "OFF"
-                }).toString()
-            }
 
-            if (!manualMode2)
-            {
+                if (!manualMode2) {
 
-                relay2.text = (if (processEnergyConsumption(energyUsage,event.values[0].toString()) == "1") {
-                    "ON"
+                    relay2.text = (if (processEnergyConsumption(
+                            energyUsage,
+                            event.values[0].toString()
+                        ) == "1"
+                    ) {
+                        "ON"
+                    } else {
+                        "OFF"
+                    }).toString()
                 }
-                else
-                {
-                    "OFF"
-                }).toString()
-            }
 
-            test.text = event.values[0].toString()
+                test.text = event.values[0].toString()
+            }
         }
     }
 
