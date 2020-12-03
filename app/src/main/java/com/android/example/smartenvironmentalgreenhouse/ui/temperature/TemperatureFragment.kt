@@ -98,8 +98,8 @@ class TemperatureFragment : Fragment() {
                 var currentTempeInt: Int = currentTempe.toInt()
                 var currentHumidInt: Int = currentHumid.toInt()
 
-                //processTempe(currentTempeInt)
-                //processHumid(currentHumidInt)
+                processTempe(currentTempeInt)
+                processHumid(currentHumidInt)
 
                 Log.d(TAG, "Value is: $currentTempeInt")
                 Log.d(TAG, "Value is: $currentHumidInt")
