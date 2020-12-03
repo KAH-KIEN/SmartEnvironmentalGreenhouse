@@ -239,6 +239,7 @@ class LightFragment : Fragment(), SensorEventListener {
         return root
     }
 
+
     private fun processLight(light: String): String{
         val database = Firebase.database
         val value :String = if (light.toFloat() <5)
@@ -329,6 +330,7 @@ class LightFragment : Fragment(), SensorEventListener {
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
 
     }
+
 
 
 }
