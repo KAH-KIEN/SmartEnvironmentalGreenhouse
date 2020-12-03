@@ -38,6 +38,7 @@ class TemperatureFragment : Fragment() {
 
         val database = Firebase.database
         val myRef = database.reference
+
         val tempValue: TextView = root.findViewById(R.id.tempValue)
         val hmdValue: TextView = root.findViewById(R.id.hmdValue)
         val fanStatus: TextView = root.findViewById(R.id.fanStatus)
@@ -92,14 +93,15 @@ class TemperatureFragment : Fragment() {
                 val tempeValue = dataSnapshot.child("Temperature").child("tempeLvl").value.toString()
                 val humidValue = dataSnapshot.child("Humidity").child("humidLvl").value.toString()
 
-                var currentTempe = tempeValue.filter { it.isDigit() }
-                var currentHumid = humidValue.filter { it.isDigit() }
+                var currentTempe = tempeValue.dropLast(2)
+                var currentHumid = humidValue.dropLast(1)
 
-                var currentTempeInt: Int = currentTempe.toInt()
-                var currentHumidInt: Int = currentHumid.toInt()
 
-                //processTempe(currentTempeInt)
-                //processHumid(currentHumidInt)
+                var currentTempeInt: Float = currentTempe.toFloat()
+                var currentHumidInt: Float = currentHumid.toFloat()
+
+                processTempe(currentTempeInt)
+                processHumid(currentHumidInt)
 
                 Log.d(TAG, "Value is: $currentTempeInt")
                 Log.d(TAG, "Value is: $currentHumidInt")
@@ -125,7 +127,7 @@ class TemperatureFragment : Fragment() {
         return root
     }
 
-    private fun processTempe(temperature: Int) {
+    private fun processTempe(temperature: Float) {
         val database = Firebase.database
         if (temperature > 27)
         //High temperature, turn on the fan
@@ -140,7 +142,7 @@ class TemperatureFragment : Fragment() {
         }
     }
 
-    private fun processHumid(humidity: Int) {
+    private fun processHumid(humidity: Float) {
         val database = Firebase.database
         if (humidity > 10)
         //High humidity, open the window
