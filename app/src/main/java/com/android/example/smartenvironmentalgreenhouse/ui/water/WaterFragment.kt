@@ -40,112 +40,112 @@ class WaterFragment : Fragment() {
 
         binding = FragmentWaterBinding.inflate(inflater, container, false)
         val view = binding.root
-//
-//        upDateData()
-//
-//        binding.buttonStart.setOnClickListener{
-//            checkSoil()
-//        }
-//
-//        binding.buttonStop.setOnClickListener{
-//            stopProcess()
-//        }
+
+        upDateData()
+
+        binding.buttonStart.setOnClickListener{
+            checkSoil()
+        }
+
+        binding.buttonStop.setOnClickListener{
+            stopProcess()
+        }
         return view
     }
 
-//    fun upDateData(){
-//        thirdDatabase.child("WaterLevel").child("waterLvl").addValueEventListener(object : ValueEventListener {
-//            override fun onDataChange(dataSnapshot: DataSnapshot) {
-//                val w = dataSnapshot.getValue(String::class.java)
-//                waterValue = w.toString().replace(" cm", "").toInt()
-//                binding.textViewWaterLevel.setText(""+ waterValue+" cm")
-//
-//                Log.d("WaterLvl", "Value is: $w")
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//                Log.w("WaterLvl", "Failed to read value.", error.toException())
-//            }
-//        })
-//
-//        thirdDatabase.child("PI_001").child("mois").addValueEventListener(object : ValueEventListener {
-//            override fun onDataChange(dataSnapshot: DataSnapshot) {
-//                val soilV = dataSnapshot.getValue<String>()
-//                //test.setText(soilV)
-//                soilValue = soilV.toString().replace("", "").toInt()
-//                binding.textViewSoilLevel.setText(""+ soilValue+" %")
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//                Log.w("WaterLvl", "Failed to read value.", error.toException())
-//            }
-//        })
-//    }
-//
-//    fun checkSoil(){
-//        val s : Int = binding.textViewSoilLevel.text.toString().replace(" %", "").toInt()
-//        if (s < minSoilLvl)
-//            checkWater()
-//        else
-//            binding.textViewStatus.setText("Good condition")
-//    }
-//
-//    fun checkWater(){
-//        if (waterValue<requiredWaterLvl){
-//            fillWater()
-//        }
-//
-//    }
-//    fun fillWater() = runBlocking {
-//        binding.textViewStatus.setText("Water level low: Filling water")
-//        waterRunnable.run()
-//    }
-//
-//    fun waterPlants() {
-//        binding.textViewStatus.setText("Soil moisture level low: Watering Plants")
-//        wRunnable.run()
-//    }
-//
-//
-//    private val mHandler = Handler()
-//    private val waterRunnable: Runnable = object : Runnable {
-//        override fun run() {
-//            thirdDatabase.child("PI_001").child("relay2").setValue("1")
-//            if(waterValue< requiredWaterLvl){
-//                waterValue++
-//                binding.textViewWaterLevel.setText("" + waterValue + " cm")
-//                thirdDatabase.child("WaterLevel").child("waterLvl").setValue("" + waterValue + " cm")
-//                mHandler.postDelayed(this, 1000)
-//            }
-//            else{
-//                thirdDatabase.child("PI_001").child("relay2").setValue("0")
-//                mHandler.removeCallbacks(this)
-//                waterPlants()
-//            }
-//        }
-//    }
-//
-//    private val wHandler = Handler()
-//    fun stopProcess(){
-//        thirdDatabase.child("PI_001").child("relay1").setValue("0")
-//        wHandler.removeCallbacks(wRunnable)
-//        binding.textViewStatus.setText("Good condition")
-//    }
-//
-//    private val wRunnable: Runnable = object : Runnable {
-//        override fun run() {
-//            val s : Int = binding.textViewSoilLevel.text.toString().replace(" %", "").toInt()
-//            thirdDatabase.child("PI_001").child("relay1").setValue("1")
-//            if(s< bestSoilValue){
-//                waterValue--
-//                binding.textViewWaterLevel.setText("" + waterValue + " cm")
-//                thirdDatabase.child("WaterLevel").child("waterLvl").setValue("" + waterValue + " cm")
-//                wHandler.postDelayed(this, 1000)
-//            }else{
-//                thirdDatabase.child("PI_001").child("relay1").setValue("0")
-//                wHandler.removeCallbacks(this)
-//                binding.textViewStatus.setText("Good condition")
-//            }
-//        }
-//    }
+    fun upDateData(){
+        thirdDatabase.child("WaterLevel").child("waterLvl").addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val w = dataSnapshot.getValue(String::class.java)
+                waterValue = w.toString().replace(" cm", "").toInt()
+                binding.textViewWaterLevel.setText(""+ waterValue+" cm")
+
+                Log.d("WaterLvl", "Value is: $w")
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.w("WaterLvl", "Failed to read value.", error.toException())
+            }
+        })
+
+        thirdDatabase.child("PI_001").child("mois").addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val soilV = dataSnapshot.getValue<String>()
+                //test.setText(soilV)
+                soilValue = soilV.toString().replace("", "").toInt()
+                binding.textViewSoilLevel.setText(""+ soilValue+" %")
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.w("WaterLvl", "Failed to read value.", error.toException())
+            }
+        })
+    }
+
+    fun checkSoil(){
+        val s : Int = binding.textViewSoilLevel.text.toString().replace(" %", "").toInt()
+        if (s < minSoilLvl)
+            checkWater()
+        else
+            binding.textViewStatus.setText("Good condition")
+    }
+
+    fun checkWater(){
+        if (waterValue<requiredWaterLvl){
+            fillWater()
+        }
+
+    }
+    fun fillWater() = runBlocking {
+        binding.textViewStatus.setText("Water level low: Filling water")
+        waterRunnable.run()
+    }
+
+    fun waterPlants() {
+        binding.textViewStatus.setText("Soil moisture level low: Watering Plants")
+        wRunnable.run()
+    }
+
+
+    private val mHandler = Handler()
+    private val waterRunnable: Runnable = object : Runnable {
+        override fun run() {
+            thirdDatabase.child("PI_001").child("relay2").setValue("1")
+            if(waterValue< requiredWaterLvl){
+                waterValue++
+                binding.textViewWaterLevel.setText("" + waterValue + " cm")
+                thirdDatabase.child("WaterLevel").child("waterLvl").setValue("" + waterValue + " cm")
+                mHandler.postDelayed(this, 1000)
+            }
+            else{
+                thirdDatabase.child("PI_001").child("relay2").setValue("0")
+                mHandler.removeCallbacks(this)
+                waterPlants()
+            }
+        }
+    }
+
+    private val wHandler = Handler()
+    fun stopProcess(){
+        thirdDatabase.child("PI_001").child("relay1").setValue("0")
+        wHandler.removeCallbacks(wRunnable)
+        binding.textViewStatus.setText("Good condition")
+    }
+
+    private val wRunnable: Runnable = object : Runnable {
+        override fun run() {
+            val s : Int = binding.textViewSoilLevel.text.toString().replace(" %", "").toInt()
+            thirdDatabase.child("PI_001").child("relay1").setValue("1")
+            if(s< bestSoilValue){
+                waterValue--
+                binding.textViewWaterLevel.setText("" + waterValue + " cm")
+                thirdDatabase.child("WaterLevel").child("waterLvl").setValue("" + waterValue + " cm")
+                wHandler.postDelayed(this, 1000)
+            }else{
+                thirdDatabase.child("PI_001").child("relay1").setValue("0")
+                wHandler.removeCallbacks(this)
+                binding.textViewStatus.setText("Good condition")
+            }
+        }
+    }
 }
